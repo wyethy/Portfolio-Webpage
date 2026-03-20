@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+      section[id] { scroll-margin-top: 70px; }
+
+      .logo-letter {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: 700;
+        color: #4ade80;
+        background: rgba(74,222,128,0.12);
+        border: 1px solid rgba(74,222,128,0.25);
+        animation: logo-fade 2.4s ease-in-out infinite alternate;
+      }
+      @keyframes logo-fade {
+        0%   { opacity: 0.25; background: rgba(74,222,128,0.08); }
+        100% { opacity: 1;    background: rgba(74,222,128,0.22); border-color: rgba(74,222,128,0.6); }
+      }
+
+      .typed-cursor {
+        animation: blink 0.7s infinite;
+        font-weight: 300;
+        color: #4ade80;
+      }
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      .hero-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.6rem;
+        line-height: 1.15;
+        letter-spacing: -0.5px;
+      }
+      .hero-typed-line {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 300;
+      }
+      #typed-text {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        color: #4ade80;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .hero-desc {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.95rem;
+        line-height: 1.75;
+        color: #9ca3af;
+      }
+      .avatar-ring {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        border: 3px solid #4ade80;
+        padding: 4px;
+        margin: 0 auto 1.5rem;
+        display: block;
+      }
+      .avatar-ring img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: top;
+        display: block;
+      }
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid #374151;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: border-color 0.3s, color 0.3s;
+        color: #6b7280;
+      }
+      .social-icon:hover {
+        border-color: #4ade80;
+        color: #4ade80;
+      }
+    </style>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: {} } }
+    </script>
+</head>
+<body class="bg-[#0a0a0a] overflow-y-auto scroll-smooth">
+
+  <!-- Matrix Canvas Background -->
+  <canvas id="matrix-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.4;pointer-events:none;"></canvas>
+
+  <!-- Scroll To Top Button -->
+  <button id="scrollToTop" class="fixed bottom-6 right-6 z-50 p-3 rounded-lg bg-green-500 text-black shadow-lg shadow-green-500/20 opacity-0 translate-y-10 transition-all duration-300 hover:bg-green-400">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+  </button>
+
+  <!-- Page Wrapper -->
+  <div class="w-screen relative" style="z-index:1;">
+    <div class="xl:w-[70%] lg:w-[80%] md:w-[90%] mx-auto relative md:px-0 px-4 md:my-10 bg-[#111111] bg-opacity-90 rounded-xl overflow-hidden">
+
+      <!-- Nav -->
+      <nav class="bg-[#111111] bg-opacity-95 shadow-lg w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between items-center h-16">
+            <div class="flex-shrink-0">
+              <a href="#" class="flex items-center gap-[2px]">
+                <span class="logo-letter" style="animation-delay:0s">P</span>
+                <span class="logo-letter" style="animation-delay:0.1s">O</span>
+                <span class="logo-letter" style="animation-delay:0.2s">R</span>
+                <span class="logo-letter" style="animation-delay:0.3s">T</span>
+                <span class="logo-letter" style="animation-delay:0.4s">F</span>
+                <span class="logo-letter" style="animation-delay:0.5s">O</span>
+                <span class="logo-letter" style="animation-delay:0.6s">L</span>
+                <span class="logo-letter" style="animation-delay:0.7s">I</span>
+                <span class="logo-letter" style="animation-delay:0.8s">O</span>
+              </a>
+            </div>
+            <div class="hidden lg:flex space-x-8">
+              <a href="#about" class="block text-green-400 hover:text-green-300">About</a>
+              <a href="#what-i-do" class="block text-gray-400 hover:text-green-400">What I Do</a>
+              <a href="#professional-journey" class="block text-gray-400 hover:text-green-400">Resume</a>
+              <a href="#certifications" class="block text-gray-400 hover:text-green-400">Certificates</a>
+              <a href="#contact" class="block text-gray-400 hover:text-green-400">Contact</a>
+            </div>
+            <div class="lg:hidden flex items-center">
+              <button id="mobile-menu-button" class="text-green-400 hover:text-green-600 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="absolute inset-0 bg-[#111111] bg-opacity-50 z-50 hidden">
+          <div class="fixed inset-y-0 left-0 bg-[#111111] w-64 p-6 transform -translate-x-full transition-transform">
+            <button id="close-menu-button" class="text-green-400 hover:text-green-600 focus:outline-none mb-4">
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <nav class="space-y-4">
+              <a href="#about" class="block text-green-400 hover:text-green-300">About</a>
+              <a href="#what-i-do" class="block text-gray-400 hover:text-green-400">What I Do</a>
+              <a href="#professional-journey" class="block text-gray-400 hover:text-green-400">Resume</a>
+              <a href="#certifications" class="block text-gray-400 hover:text-green-400">Certificates</a>
+              <a href="#contact" class="block text-gray-400 hover:text-green-400">Contact</a>
+            </nav>
+          </div>
+        </div>
+      </nav>
+
+      <div class="w-full h-full flex flex-col items-center">
+
+        <!-- Hero / About -->
+        <section class="w-full py-16 px-6 flex flex-col items-center text-center bg-[#161616] relative" id="about">
+          <div style="position:absolute;top:20px;left:20px;width:36px;height:36px;border-top:2px solid #4ade80;border-left:2px solid #4ade80;border-radius:4px 0 0 0;"></div>
+          <div style="position:absolute;top:20px;right:20px;width:36px;height:36px;border-top:2px solid #4ade80;border-right:2px solid #4ade80;border-radius:0 4px 0 0;"></div>
+          <div style="position:absolute;bottom:20px;left:20px;width:36px;height:36px;border-bottom:2px solid rgba(74,222,128,0.3);border-left:2px solid rgba(74,222,128,0.3);border-radius:0 0 0 4px;"></div>
+          <div style="position:absolute;bottom:20px;right:20px;width:36px;height:36px;border-bottom:2px solid rgba(74,222,128,0.3);border-right:2px solid rgba(74,222,128,0.3);border-radius:0 0 4px 0;"></div>
+
+          <div class="avatar-ring">
+            <img src="images/formal.jpg" alt="Patricia Monique Asis">
+          </div>
+
+          <p class="hero-typed-line text-gray-400 mb-3">I'm a <span id="typed-text"></span><span class="typed-cursor">|</span></p>
+          <h2 class="hero-name text-white mb-4">Patricia Monique Asis</h2>
+          <p class="hero-desc mb-6 max-w-xl">
+            BSIT student and technical specialist focused on system optimization. I bridge the gap between digital operations and technical systems through CRM management, troubleshooting, and end-to-end digital production.
+          </p>
+
+          <div class="flex gap-3 justify-center mb-8">
+            <a href="https://www.facebook.com/asispatricia" target="_blank" class="social-icon">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/moniqueenie/" target="_blank" class="social-icon">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/patricia-monique-asis-ab9024314" target="_blank" class="social-icon">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+
+          <a href="Resume.pdf" download target="_blank" class="px-8 py-3 text-white font-semibold outline outline-green-400 rounded-full hover:bg-green-500 transition duration-300">Download CV</a>
+
+        <!-- What I Do -->
+        <section class="md:pt-20 pt-10 md:px-20 px-4 w-full" id="what-i-do">
+          <div class="w-fit mb-10">
+            <h2 class="text-2xl font-bold text-white pb-2">What I Do</h2>
+            <div class="rounded-t-full border-[1px] border-gray-500 overflow-hidden">
+              <hr class="border-[3px] border-green-400 w-[20%]" />
+            </div>
+          </div>
+          <div class="w-full grid lg:grid-cols-2 grid-cols-1 gap-6 mt-8">
+            <div class="flex gap-4 items-start">
+              <span class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-green-400/10 border border-green-400/30">
+                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              </span>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-1">Web Development</h3>
+                <p class="text-gray-400">Crafting responsive and intuitive websites tailored to your unique needs using cutting-edge technologies.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-green-400/10 border border-green-400/30">
+                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </span>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-1">UI/UX Design</h3>
+                <p class="text-gray-400">Creating visually appealing and user-centric designs that enhance user experiences and engagement.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-green-400/10 border border-green-400/30">
+                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7M4 7c0-2 1-3 3-3h10c2 0 3 1 3 3M4 7h16M9 11h6M9 15h4"/></svg>
+              </span>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-1">Custom CMS Solutions</h3>
+                <p class="text-gray-400">Building reusable and efficient CMS APIs to simplify website management and scalability.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-green-400/10 border border-green-400/30">
+                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              </span>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-1">Mobile App Dev't</h3>
+                <p class="text-gray-400">Designing and developing user-friendly mobile applications for iOS and Android, ensuring seamless performance and user satisfaction.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-green-400/10 border border-green-400/30">
+                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </span>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-1">E-commerce Development</h3>
+                <p class="text-gray-400">Creating robust platforms to elevate your online business presence.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-green-400/10 border border-green-400/30">
+                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </span>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-1">API Integration</h3>
+                <p class="text-gray-400">Seamlessly connecting systems to enhance functionality and performance.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Professional Journey -->
+        <section id="professional-journey" class="md:pt-20 pt-10 md:px-20 px-4 w-full">
+          <div class="w-fit sm:mb-20 mb-10">
+            <h2 class="text-2xl font-bold text-white pb-2">Professional Journey</h2>
+            <div class="rounded-t-full border-[1px] border-gray-500 overflow-hidden">
+              <hr class="border-[3px] border-green-400 w-[40%]" />
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-2 grid-cols-1 gap-8 items-start">
+            <div class="bg-[#1a1a1a] p-8 rounded-2xl border border-gray-800 hover:border-green-400/50 transition-all duration-300 relative group">
+              <div class="flex justify-between items-start mb-4">
+                <div class="flex gap-4 items-center">
+                  <div class="bg-green-400 p-3 rounded-xl shadow-lg shadow-green-400/20 group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-bold text-white">Appointment Setter</h3>
+                    <p class="text-gray-400">KB Staples</p>
+                  </div>
+                </div>
+                <span class="bg-gray-800 text-[10px] px-2 py-1 rounded uppercase text-green-400 font-bold tracking-tighter">Recent</span>
+              </div>
+              <p class="text-green-400 text-sm font-semibold mb-3">December 2024 - March 2025</p>
+              <p class="text-gray-400 text-sm leading-relaxed mb-6">Optimized lead-generation workflows and managed CRM databases to ensure high data integrity and efficient scheduling pipelines.</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-green-400/10 border border-green-400/20 text-green-400 text-[10px] rounded-full font-medium">Data Management</span>
+                <span class="px-3 py-1 bg-green-400/10 border border-green-400/20 text-green-400 text-[10px] rounded-full font-medium">CRM Administration</span>
+              </div>
+            </div>
+            <div class="bg-[#1a1a1a] p-8 rounded-2xl border border-gray-800 hover:border-green-400/50 transition-all duration-300 relative group">
+              <div class="flex gap-4 items-center mb-4">
+                <div class="bg-green-400 p-3 rounded-xl shadow-lg shadow-green-400/20 group-hover:scale-110 transition-transform">
+                  <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-white">Customer Service</h3>
+                  <p class="text-gray-400">CBS (Customer Benefit Services)</p>
+                </div>
+              </div>
+              <p class="text-green-400 text-sm font-semibold mb-3">2023 - 2024</p>
+              <p class="text-gray-400 text-sm leading-relaxed mb-6">Provided high-level technical troubleshooting and conflict resolution while navigating complex internal software systems.</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-green-400/10 border border-green-400/20 text-green-400 text-[10px] rounded-full font-medium">Technical Support</span>
+                <span class="px-3 py-1 bg-green-400/10 border border-green-400/20 text-green-400 text-[10px] rounded-full font-medium">SLA Management</span>
+              </div>
+            </div>
+            <div class="bg-[#1a1a1a] p-8 rounded-2xl border border-gray-800 hover:border-green-400/50 transition-all duration-300 relative group">
+              <div class="flex gap-4 items-center mb-4">
+                <div class="bg-green-400 p-3 rounded-xl shadow-lg shadow-green-400/20 group-hover:scale-110 transition-transform">
+                  <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-white">Social Media Management</h3>
+                  <p class="text-gray-400">Freelancing</p>
+                </div>
+              </div>
+              <p class="text-green-400 text-sm font-semibold mb-3">2021 - 2023</p>
+              <p class="text-gray-400 text-sm leading-relaxed mb-6">Executed end-to-end digital content production utilizing video editing software to drive technical engagement.</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-green-400/10 border border-green-400/20 text-green-400 text-[10px] rounded-full font-medium">Content Strategy</span>
+                <span class="px-3 py-1 bg-green-400/10 border border-green-400/20 text-green-400 text-[10px] rounded-full font-medium">Video Editing</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Certifications -->
+        <section id="certifications" class="md:pt-20 pt-10 md:px-20 px-4 w-full">
+          <div class="w-fit sm:mb-20 mb-10">
+            <h2 class="text-2xl font-bold text-white pb-2">Certifications</h2>
+            <div class="rounded-t-full border-[1px] border-gray-500 overflow-hidden">
+              <hr class="border-[3px] border-green-400 w-[40%]" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div class="group relative overflow-hidden rounded-xl bg-[#1a1a1a] border border-gray-800 hover:border-green-400/50 transition-all duration-300 cursor-pointer" onclick="openLightbox('images/sql.png','SQL Mastery')">
+              <div class="aspect-[4/3] overflow-hidden relative">
+                <img src="images/sql.png" alt="SQL Certificate" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                </div>
+              </div>
+              <div class="p-4"><h3 class="text-white font-semibold text-sm">SQL Mastery</h3><p class="text-green-400 text-[10px] uppercase tracking-wider font-bold mt-1">Verified Certificate</p></div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-xl bg-[#1a1a1a] border border-gray-800 hover:border-green-400/50 transition-all duration-300 cursor-pointer" onclick="openLightbox('images/php.png','PHP Mastery')">
+              <div class="aspect-[4/3] overflow-hidden relative">
+                <img src="images/php.png" alt="PHP Certificate" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                </div>
+              </div>
+              <div class="p-4"><h3 class="text-white font-semibold text-sm">PHP Mastery</h3><p class="text-green-400 text-[10px] uppercase tracking-wider font-bold mt-1">Verified Certificate</p></div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-xl bg-[#1a1a1a] border border-gray-800 hover:border-green-400/50 transition-all duration-300 cursor-pointer" onclick="openLightbox('images/javascript.png','JavaScript Mastery')">
+              <div class="aspect-[4/3] overflow-hidden relative">
+                <img src="images/javascript.png" alt="JavaScript Certificate" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                </div>
+              </div>
+              <div class="p-4"><h3 class="text-white font-semibold text-sm">JavaScript Mastery</h3><p class="text-green-400 text-[10px] uppercase tracking-wider font-bold mt-1">Verified Certificate</p></div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-xl bg-[#1a1a1a] border border-gray-800 hover:border-green-400/50 transition-all duration-300 cursor-pointer" onclick="openLightbox('images/html.png','HTML Mastery')">
+              <div class="aspect-[4/3] overflow-hidden relative">
+                <img src="images/html.png" alt="HTML Certificate" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                </div>
+              </div>
+              <div class="p-4"><h3 class="text-white font-semibold text-sm">HTML Mastery</h3><p class="text-green-400 text-[10px] uppercase tracking-wider font-bold mt-1">Verified Certificate</p></div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-xl bg-[#1a1a1a] border border-gray-800 hover:border-green-400/50 transition-all duration-300 cursor-pointer" onclick="openLightbox('images/css.png','CSS Mastery')">
+              <div class="aspect-[4/3] overflow-hidden relative">
+                <img src="images/css.png" alt="CSS Certificate" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                </div>
+              </div>
+              <div class="p-4"><h3 class="text-white font-semibold text-sm">CSS Mastery</h3><p class="text-green-400 text-[10px] uppercase tracking-wider font-bold mt-1">Verified Certificate</p></div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-xl bg-[#1a1a1a] border border-gray-800 hover:border-green-400/50 transition-all duration-300 cursor-pointer" onclick="openLightbox('images/C.png','C Mastery')">
+              <div class="aspect-[4/3] overflow-hidden relative">
+                <img src="images/C.png" alt="C Certificate" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                </div>
+              </div>
+              <div class="p-4"><h3 class="text-white font-semibold text-sm">C Mastery</h3><p class="text-green-400 text-[10px] uppercase tracking-wider font-bold mt-1">Verified Certificate</p></div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Lightbox -->
+        <div id="lightbox" class="fixed inset-0 z-[999] hidden items-center justify-center" style="background:rgba(0,0,0,0.88);" onclick="closeLightbox()">
+          <div class="relative z-10 w-full mx-4 flex flex-col items-center" style="max-width:860px;" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center w-full mb-3">
+              <p id="lightbox-title" class="text-white font-semibold text-lg"></p>
+              <button onclick="closeLightbox()" class="text-gray-400 hover:text-white transition-colors">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <img id="lightbox-img" src="" alt="" class="rounded-xl border border-gray-700" style="max-height:80vh;max-width:100%;width:auto;object-fit:contain;" />
+            <p class="text-green-400 text-xs uppercase tracking-wider font-bold mt-3">Verified Certificate</p>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <section class="w-full sm:py-20 py-10 md:px-20 px-4" id="contact">
+          <div class="w-fit sm:mb-10 mb-6">
+            <h2 class="text-2xl font-bold text-white pb-2">Contact Me</h2>
+            <div class="rounded-t-full border-[1px] border-gray-500 overflow-hidden">
+              <hr class="border-[3px] border-green-400 w-[80%]" />
+            </div>
+          </div>
+          <p class="text-gray-400 mb-8">Have a project in mind or want to work together? Send me a message!</p>
+          <form id="contact-form" action="https://formspree.io/f/mreydykp" method="POST" class="w-full max-w-2xl flex flex-col gap-4">
+            <input type="hidden" name="_replyto" value="patriciamonique.asis@carsu.edu.ph" />
+            <div class="grid sm:grid-cols-2 grid-cols-1 gap-4">
+              <div class="flex flex-col gap-1">
+                <label class="text-gray-400 text-sm">Name</label>
+                <input name="name" type="text" placeholder="Your name" required class="bg-[#1a1a1a] border border-gray-700 focus:border-green-400 outline-none rounded-lg px-4 py-3 text-white text-sm transition-colors duration-200" />
+              </div>
+              <div class="flex flex-col gap-1">
+                <label class="text-gray-400 text-sm">Email</label>
+                <input name="email" type="email" placeholder="your@email.com" required class="bg-[#1a1a1a] border border-gray-700 focus:border-green-400 outline-none rounded-lg px-4 py-3 text-white text-sm transition-colors duration-200" />
+              </div>
+            </div>
+            <div class="flex flex-col gap-1">
+              <label class="text-gray-400 text-sm">Subject</label>
+              <input name="subject" type="text" placeholder="What's this about?" class="bg-[#1a1a1a] border border-gray-700 focus:border-green-400 outline-none rounded-lg px-4 py-3 text-white text-sm transition-colors duration-200" />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label class="text-gray-400 text-sm">Message</label>
+              <textarea name="message" rows="5" placeholder="Tell me about your project..." required class="bg-[#1a1a1a] border border-gray-700 focus:border-green-400 outline-none rounded-lg px-4 py-3 text-white text-sm transition-colors duration-200 resize-none"></textarea>
+            </div>
+            <div class="flex items-center gap-4 flex-wrap">
+              <button type="submit" class="px-8 py-3 bg-green-400 text-black font-semibold rounded-full hover:bg-green-300 transition-colors duration-200">
+                Send Message
+              </button>
+              <p id="form-msg" class="text-green-400 text-sm hidden">✓ Message sent! I'll get back to you soon.</p>
+              <p id="form-err" class="text-red-400 text-sm hidden">✗ Something went wrong. Please try again.</p>
+            </div>
+          </form>
+        </section>
+
+        <!-- Footer -->
+        <footer class="w-full mt-10 border-t-2 pt-4 pb-8 border-gray-500">
+          <div class="flex sm:flex-row flex-col sm:justify-between items-center md:px-20 px-4">
+            <div class="flex gap-3 items-center">
+              <a href="https://www.facebook.com/asispatricia" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-600 text-gray-400 hover:border-green-400 hover:text-green-400 transition-all duration-300">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+              </a>
+              <a href="https://www.instagram.com/moniqueenie/" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-600 text-gray-400 hover:border-green-400 hover:text-green-400 transition-all duration-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/patricia-monique-asis-ab9024314" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-600 text-gray-400 hover:border-green-400 hover:text-green-400 transition-all duration-300">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              </a>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Typing animation
+    (function() {
+      const words = ['Designer', 'Developer', 'Freelancer', 'Video Editor'];
+      const el = document.getElementById('typed-text');
+      let wordIndex = 0, charIndex = 0, deleting = false;
+      function type() {
+        const current = words[wordIndex];
+        if (deleting) {
+          el.textContent = current.substring(0, charIndex--);
+          if (charIndex < 0) { deleting = false; wordIndex = (wordIndex + 1) % words.length; setTimeout(type, 400); return; }
+        } else {
+          el.textContent = current.substring(0, charIndex++);
+          if (charIndex > current.length) { deleting = true; setTimeout(type, 1500); return; }
+        }
+        setTimeout(type, deleting ? 40 : 80);
+      }
+      setTimeout(type, 800);
+    })();
+
+    // Mobile menu
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMenuButton = document.getElementById('close-menu-button');
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.remove('hidden');
+      mobileMenu.querySelector('div').classList.remove('-translate-x-full');
+    });
+    closeMenuButton.addEventListener('click', () => {
+      mobileMenu.querySelector('div').classList.add('-translate-x-full');
+      setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+    });
+    mobileMenu.addEventListener('click', (e) => { if (e.target === mobileMenu) closeMenuButton.click(); });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const id = link.getAttribute('href').slice(1);
+        if (!id) return;
+        const target = document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
+        if (!mobileMenu.classList.contains('hidden')) closeMenuButton.click();
+      });
+    });
+
+    // Scroll to top button
+    const scrollBtn = document.getElementById('scrollToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        scrollBtn.classList.remove('opacity-0','translate-y-10');
+        scrollBtn.classList.add('opacity-100','translate-y-0');
+      } else {
+        scrollBtn.classList.remove('opacity-100','translate-y-0');
+        scrollBtn.classList.add('opacity-0','translate-y-10');
+      }
+    });
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Contact form — Formspree AJAX
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const msg = document.getElementById('form-msg');
+      const err = document.getElementById('form-err');
+      msg.classList.add('hidden'); err.classList.add('hidden');
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+        if (res.ok) { msg.classList.remove('hidden'); form.reset(); }
+        else { err.classList.remove('hidden'); }
+      } catch { err.classList.remove('hidden'); }
+    });
+
+    // Lightbox
+    function openLightbox(src, title) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-title').textContent = title;
+      const lb = document.getElementById('lightbox');
+      lb.classList.remove('hidden');
+      lb.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      const lb = document.getElementById('lightbox');
+      lb.classList.add('hidden');
+      lb.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+    window.openLightbox = openLightbox;
+    window.closeLightbox = closeLightbox;
+
+    // Matrix rain
+    window.addEventListener('load', () => {
+      const canvas = document.getElementById('matrix-canvas');
+      const ctx = canvas.getContext('2d');
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()ｦｱｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉ';
+      const fontSize = 14;
+      let columns, drops;
+      function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        columns = Math.floor(canvas.width / fontSize);
+        drops = Array(columns).fill(1);
+      }
+      function draw() {
+        ctx.fillStyle = 'rgba(10,10,10,0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = fontSize + 'px monospace';
+        for (let i = 0; i < drops.length; i++) {
+          ctx.fillStyle = Math.random() > 0.95 ? '#aaffaa' : '#00ff41';
+          ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+      window.addEventListener('resize', init);
+      init();
+      setInterval(draw, 35);
+    });
+  </script>
+
+</body>
+</html>
